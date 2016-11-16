@@ -37,6 +37,7 @@ function create() {
     text.anchor.set(0.5);
 
 
+
     emitter = game.add.emitter(game.world.centerX, 200, 200);
 
     //  Here we're passing an array of image keys. It will pick one at random when emitting a new particle.
@@ -62,7 +63,14 @@ function create() {
     cat.height = 100;
     game.physics.enable(cat, Phaser.Physics.ARCADE);
 
-    
+    cat_score = 0
+    cat_score_text = game.add.text(0, 600, 'Cat: 0', {fill: '#ADFF2F', fontSize: '30px'});
+    cat_score_text.anchor.set(0.0, 1.0);
+
+    dog_score = 0
+    dog_score_text = game.add.text(800, 600, 'Dog: 0', {fill: '#ADFF2F', fontSize: '30px'});
+    dog_score_text.anchor.set(1.0, 1.0);
+
 }
 //to have running_around_puppy moving around
 function update() {
@@ -91,10 +99,16 @@ function update() {
 }
 
 function cat_got_candy(cat, candy) {
+	cat_score += 1;
+	cat_score_text.text = 'Cat: ' + cat_score;
 	candy.kill();
 }
 function puppy_got_candy(puppy, candy) {
+	dog_score += 1;
+	dog_score_text.text = 'Dog: ' + dog_score;
 	candy.kill();
+
+
 
 }
 
