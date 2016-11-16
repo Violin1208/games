@@ -11,6 +11,9 @@ function preload() {
     game.load.image('candy_street', 'candykingdom3.gif');
     game.load.image('candy_puppy', 'candy-puppy.png');
     game.load.image('candy_cat', 'candy_cat.png');
+    game.load.image('candy1', 'pink_candy.png');
+    game.load.image('candy2', 'red_candy.png');
+    game.load.image('candy3', 'peppermint_candy.png');
 
 }
 
@@ -34,6 +37,15 @@ function create() {
     text.anchor.set(0.5);
 
 
+    emitter = game.add.emitter(game.world.centerX, 200, 200);
+
+    //  Here we're passing an array of image keys. It will pick one at random when emitting a new particle.
+    emitter.makeParticles(['candy1', 'candy2', 'candy3']);
+    emitter.minParticleScale = 0.05
+    emitter.maxParticleScale = 0.10
+    emitter.start(false, 5000, 100);
+
+
     running_around_puppy = game.add.sprite(400, 550, 'candy_puppy');
     running_around_puppy.anchor.set(0.5, 0.5);
     running_around_puppy.width = 100;
@@ -49,6 +61,7 @@ function create() {
     cat.height = 100;
     game.physics.enable(cat, Phaser.Physics.ARCADE);
 
+    
 }
 //to have running_around_puppy moving around
 function update() {
