@@ -33,16 +33,17 @@ function create() {
 
 
 
-    text = game.add.text(400, 50, 'Click and follow the cat!', {fill: '#00ff99', fontSize: '60px'});
+    text = game.add.text(400, 50, 'Click and move the cat!', {fill: '#ADFF2F', fontSize: '60px'});
     text.anchor.set(0.5);
 
 
     emitter = game.add.emitter(game.world.centerX, 200, 200);
 
     //  Here we're passing an array of image keys. It will pick one at random when emitting a new particle.
-    emitter.makeParticles(['candy1', 'candy2', 'candy3']);
-    emitter.minParticleScale = 0.05
-    emitter.maxParticleScale = 0.10
+    emitter.makeParticles(['candy1', 'candy2', 'candy3'], 0, undefined, true, true);
+    emitter.minParticleScale = 0.05;
+    emitter.maxParticleScale = 0.10;
+    emitter.width = 400;
     emitter.start(false, 5000, 100);
 
 
@@ -65,6 +66,9 @@ function create() {
 }
 //to have running_around_puppy moving around
 function update() {
+    game.physics.arcade.overlap(emitter, cat, cat_got_candy, null, this);
+    game.physics.arcade.overlap(emitter, running_around_puppy, puppy_got_candy, null, this);
+
 	if (running_around_puppy.x > 700) {
 		    running_around_puppy.body.velocity.x = -150;
 	}
@@ -84,11 +88,19 @@ function update() {
         //  Otherwise turn off velocity because we're close enough to the pointer
         cat.body.velocity.set(0);
     }
+}
+
+function cat_got_candy(cat, candy) {
+	candy.kill();
+}
+function puppy_got_candy(puppy, candy) {
+	candy.kill();
 
 }
 
+
 function clicked_on_image() {
-	text.text = "Clicked!!";
+	text.text = "Clicked. Enjoy!!";
 }
 
 
