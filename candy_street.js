@@ -10,6 +10,7 @@ function preload() {
     //  The second parameter is the URL of the image (relative)
     game.load.image('candy_street', 'candykingdom3.gif');
     game.load.image('candy_puppy', 'candy-puppy.png');
+    game.load.image('candy_cat', 'candy_cat.png');
 
 }
 
@@ -29,7 +30,9 @@ function create() {
 
 
 
-    text = game.add.text(250, 16, 'Hello', {fill: '#ff80ff', fontSize: '60px'})
+    text = game.add.text(400, 50, 'Click and follow the cat!', {fill: '#00ff99', fontSize: '60px'});
+    text.anchor.set(0.5);
+
 
     running_around_puppy = game.add.sprite(400, 550, 'candy_puppy');
     running_around_puppy.anchor.set(0.5, 0.5);
@@ -39,6 +42,12 @@ function create() {
     game.physics.enable(running_around_puppy, Phaser.Physics.ARCADE);
 
     running_around_puppy.body.velocity.x=150;
+
+    cat = game.add.sprite(400, 300, 'candy_cat');
+    cat.anchor.set(0.5, 0.5);
+    cat.width = 100;
+    cat.height = 100;
+    game.physics.enable(cat, Phaser.Physics.ARCADE);
 
 }
 //to have running_around_puppy moving around
@@ -50,6 +59,19 @@ function update() {
 	if (running_around_puppy.x <100) {
 		    running_around_puppy.body.velocity.x = 150;
   }
+
+  //  If the cat is > 8px away from the pointer then let's move to it
+    if (game.physics.arcade.distanceToPointer(cat, game.input.activePointer) > 8)
+    {
+        //  Make the object seek to the active pointer (mouse or touch).
+        game.physics.arcade.moveToPointer(cat, 300);
+    }
+    else
+    {
+        //  Otherwise turn off velocity because we're close enough to the pointer
+        cat.body.velocity.set(0);
+    }
+
 }
 
 function clicked_on_image() {
